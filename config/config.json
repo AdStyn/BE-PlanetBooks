@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "aiti3939_admin",
+    "password": "@{(!;U)dOxgT",
+    "database": "aiti3939_kancil_practice_crud",
+    "host": "217.21.73.177",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
