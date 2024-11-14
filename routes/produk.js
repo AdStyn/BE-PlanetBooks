@@ -133,7 +133,9 @@ router.get("/produk/:kategoriId/produkbuku", async (req, res) => {
     const produk = await KategoriBuku.findByPk(kategoriId, {
       include: [
         {
-          model: ProdukBuku,
+          model: models.ProdukBuku,
+          attributes: ["image", "author", "judul", "harga"],
+          as: "ProdukBuku",
         },
       ],
     });

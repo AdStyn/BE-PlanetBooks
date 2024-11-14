@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const multer = require("multer");
 const path = require("path");
+const models = require("../models");
 const KategoriBuku = require("../models/kategoribuku");
 
 //digunakan untuk menambah image
@@ -131,4 +132,26 @@ router.get("/tampil_prdct/:kategoriId", async (req, res) => {
   }
 });
 
+router.get("/tampil", async function (req, res, next) {
+  try {
+    let cekdata = await models.ProdukBuku.findAll({
+      attributes: ["image", "author", "judul", "harga"],
+    });
+
+    cekdata = cekdata.map((produkbuku) => {
+      if (produkbuku.image) {
+        produkbuku.image = "uploads/" + produkbuku.image;
+      }
+      return produkbuku;
+    });
+
+    return res.status(200).json({
+      responseCode: 200,
+      data: cekdata,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ responseCode: 400, message: error.message });
+  }
+});
 module.exports = router;
