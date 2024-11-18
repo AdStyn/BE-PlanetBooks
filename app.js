@@ -9,8 +9,9 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var kategoriRouter = require("./routes/kategori");
 var produkRouter = require("./routes/produk");
-const produkbuku = require("../backend/models/produkbuku");
-const kategoribuku = require("../backend/models/kategoribuku")
+const produkbuku = require("../BE-PlanetBooks/models/produkbuku");
+const kategoribuku = require("../BE-PlanetBooks/models/kategoribuku");
+const historieRouter = require("./routes/history");
 
 // var protectedRoute = require('./routes/protectedRoute');
 
@@ -39,6 +40,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/kategori", kategoriRouter);
 app.use("/produk", produkRouter);
+app.use("/histori", historieRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
