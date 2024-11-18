@@ -123,5 +123,24 @@ router.put(
 //=============================================================================================================//
 //============================ TAMPILAN PRODUK ==============================//
 //=============================================================================================================//
+router.get("/selectAll", async function (req, res, next) {
+  try {
+    // Mengambil semua data produk dari tabel ProdukBuku
+    const produkBuku = await models.ProdukBuku.findAll();
+    console.log("");
+    // Jika data kosong, berikan respons yang sesuai
+    if (produkBuku.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Tidak ada data produk yang ditemukan." });
+    }
+
+    // Mengembalikan semua data produk dalam format JSON
+    res.status(200).json(produkBuku);
+  } catch (error) {
+    console.error("Error saat mengambil data produk:", error);
+    res.status(500).json({ error: "Terjadi kesalahan pada server." });
+  }
+});
 
 module.exports = router;
