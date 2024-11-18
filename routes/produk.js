@@ -123,32 +123,5 @@ router.put(
 //=============================================================================================================//
 //============================ TAMPILAN PRODUK ==============================//
 //=============================================================================================================//
-// Menampilkan semua produk dari kategori tertentu
-router.get("/produk/:kategoriId/produkbuku", async (req, res) => {
-  try {
-    // Mengambil `kategoriId` dari URL parameter
-    const { kategoriId } = req.params;
-
-    // Mencari produk berdasarkan `kategoriId` di dalam tabel ProdukBuku
-    const produk = await KategoriBuku.findByPk(kategoriId, {
-      include: [
-        {
-          model: models.ProdukBuku,
-          attributes: ["image", "author", "judul", "harga"],
-          as: "ProdukBuku",
-        },
-      ],
-    });
-
-    if (!produk) {
-      return res.status(404).json({ message: "produk tidak ditemukan" });
-    }
-
-    res.json(produk.ProdukBuku);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Terjadi kesalahan" });
-  }
-});
 
 module.exports = router;

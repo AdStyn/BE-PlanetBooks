@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   History.init(
     {
       id_user: DataTypes.INTEGER,
+      image: DataTypes.STRING,
       judulbuku: DataTypes.STRING,
+      author: DataTypes.STRING,
       kategori: DataTypes.STRING,
       harga: DataTypes.INTEGER,
     },

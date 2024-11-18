@@ -9,8 +9,8 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var kategoriRouter = require("./routes/kategori");
 var produkRouter = require("./routes/produk");
-const produkbuku = require("../BE-PlanetBooks/models/produkbuku");
-const kategoribuku = require("../BE-PlanetBooks/models/kategoribuku");
+const produkbuku = require("../backend/models/produkbuku");
+const kategoribuku = require("../backend/models/kategoribuku");
 const historieRouter = require("./routes/history");
 
 // var protectedRoute = require('./routes/protectedRoute');
