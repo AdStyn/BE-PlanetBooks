@@ -5,7 +5,6 @@ const path = require("path");
 const ProdukBuku = require("../models/produkbuku");
 const KategoriBuku = require("../models/kategoribuku");
 const models = require("../models");
-
 //digunakan untuk menambah image
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -123,23 +122,46 @@ router.put(
 //=============================================================================================================//
 //============================ TAMPILAN PRODUK ==============================//
 //=============================================================================================================//
-router.get("/selectAll", async function (req, res, next) {
+router.get("/tampil_prdct", async (req, res) => {
   try {
-    // Mengambil semua data produk dari tabel ProdukBuku
-    const produkBuku = await models.ProdukBuku.findAll();
-    console.log("");
-    // Jika data kosong, berikan respons yang sesuai
-    if (produkBuku.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Tidak ada data produk yang ditemukan." });
+    const products = await models.ProdukBuku.findAll({
+      include: [
+        {
+          model: models.KategoriBuku,
+          attributes: ["kategori"],
+          as: "KategoriBuku",
+        },
+      ],
+    });
+
+    if (!ProdukBuku || ProdukBuku.length === 0) {
+      return res.status(404).json({
+        responseCode: 404,
+        message: "Produk tidak ditemukan",
+      });
     }
 
-    // Mengembalikan semua data produk dalam format JSON
-    res.status(200).json(produkBuku);
+    // Modifikasi path gambar produk
+    const productsWithImagePath = products.map((product) => {
+      const productData = product.toJSON();
+      if (productData.KategoriBuku && productData.KategoriBuku.image) {
+        productData.KategoriBuku.image = `uploads/${productData.KategoriBuku.image}`;
+      }
+      return productData;
+    });
+
+    // Kirim respons JSON
+    return res.status(200).json({
+      responseCode: 200,
+      data: productsWithImagePath,
+    });
   } catch (error) {
-    console.error("Error saat mengambil data produk:", error);
-    res.status(500).json({ error: "Terjadi kesalahan pada server." });
+    console.error("Error fetching products:", error); // Debugging log
+    return res.status(500).json({
+      responseCode: 500,
+      message: "Terjadi kesalahan internal server",
+      error: error.message, // Mengirim pesan error untuk debug
+    });
   }
 });
 
